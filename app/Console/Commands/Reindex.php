@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Film;
 use Elasticsearch\ClientBuilder;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class Reindex extends Command
 {
@@ -43,18 +45,29 @@ class Reindex extends Command
             'http://ank-elastic:9200',       // HTTP Basic Authentication
         ];
 
+
         $client = ClientBuilder::create()
             ->setHosts($hosts)
             ->build();
 
-        $params = [
-            'index' => 'my_index',
-            'id'    => 'my_id',
-            'body'  => ['testField' => 'abc']
-        ];
+        $counter = 0;
+        if ('film' === $this->argument('index')) {
+            Film::get()
+                ->chunkById(100, function ($films) use ($client, &$counter) {
+                    $films->each(function ($film) use ($client, &$counter) {
+                        $params = [
+                            'index' => 'films',
+                            'id'    => 'my_id',
+                            'body'  => $film->toArray()
+                        ];
+                        $counter++;
+                        $client->index($params);
+                    });
 
-        $response = $client->index($params);
-        print_r($response);
+                    Log::info(sprintf('We have indexed %s films', $counter));
+                });
+        }
+
 
         return 0;
     }
