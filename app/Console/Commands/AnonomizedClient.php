@@ -54,4 +54,8 @@ class AnonomizedClient extends Command
         Log::info(sprintf('We have anonimzed %s staff users', $counter));
         return 0;
     }
+
+    private function log() {
+
+    }
 }
