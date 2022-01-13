@@ -50,12 +50,9 @@ class AnonomizedClient extends Command
             $people->last_name = $faker->name;
             $people->save();
             $counter++;
+            Log::info(sprintf('We have anonimzed with a new name: %s-%s', $people->first_name, $people->last_name));
         });
         Log::info(sprintf('We have anonimzed %s staff users', $counter));
         return 0;
-    }
-
-    private function log() {
-
     }
 }
