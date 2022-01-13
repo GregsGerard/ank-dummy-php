@@ -45,7 +45,7 @@ class AnonomizedClient extends Command
         $staffPeoples = Staff::all();
 
         $counter = 0;
-        $staffPeoples->each(function (Staff $people) use ($faker) {
+        $staffPeoples->each(function (Staff $people) use ($faker, &$counter) {
             $people->first_name = $faker->name;
             $people->last_name = $faker->name;
             $people->save();
