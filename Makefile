@@ -20,7 +20,7 @@ help: ## Print this help with list of available commands/targets and their purpo
 #
 
 .PHONY: install
-build: ## Generate swagger json
+install: ## Generate swagger json
 	rm -rf vendor
 	composer install
 
