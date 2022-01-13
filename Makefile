@@ -22,7 +22,7 @@ help: ## Print this help with list of available commands/targets and their purpo
 .PHONY: install
 install: ## Generate swagger json
 	rm -rf vendor
-	composer install
+	composer  install --no-progress
 
 
 
