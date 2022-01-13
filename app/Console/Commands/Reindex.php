@@ -56,7 +56,7 @@ class Reindex extends Command
                     $films->each(function ($film) use ($client, &$counter) {
                         $params = [
                             'index' => 'films',
-                            'id'    => 'my_id',
+                            'id'    => $film->film_id,
                             'body'  => $film->toArray()
                         ];
                         $counter++;
