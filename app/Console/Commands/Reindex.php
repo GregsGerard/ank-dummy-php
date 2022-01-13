@@ -53,7 +53,7 @@ class Reindex extends Command
         $counter = 0;
         if ('film' === $this->argument('index')) {
             Film::all()
-                ->chunkById(100, function ($films) use ($client, &$counter) {
+                ->chunk(100, function ($films) use ($client, &$counter) {
                     $films->each(function ($film) use ($client, &$counter) {
                         $params = [
                             'index' => 'films',
